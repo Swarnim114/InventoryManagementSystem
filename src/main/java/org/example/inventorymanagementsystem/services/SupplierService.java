@@ -16,13 +16,10 @@ public class SupplierService {
         this.supplierRepository = supplierRepository;
     }
 
-    // Create
     public Supplier addSupplier(Supplier supplier) {
-        // Save the supplier to the database using the SupplierRepository
         return supplierRepository.save(supplier);
     }
 
-    // Read
     public Optional<Supplier> getSupplierById(long id) {
         return supplierRepository.findById(id);
     }
@@ -31,24 +28,20 @@ public class SupplierService {
         return supplierRepository.findAll();
     }
 
-    // Update
     public Optional<Supplier> updateSupplier(long id, Supplier newSupplier) {
         Optional<Supplier> optionalSupplier = supplierRepository.findById(id);
         if (optionalSupplier.isPresent()) {
             Supplier existingSupplier = optionalSupplier.get();
-            // Update existing supplier fields
             existingSupplier.setName(newSupplier.getName());
             existingSupplier.setEmail(newSupplier.getEmail());
             existingSupplier.setPhone(newSupplier.getPhone());
             existingSupplier.setDescription(newSupplier.getDescription());
-            // Save the updated supplier
             return Optional.of(supplierRepository.save(existingSupplier));
         } else {
             return Optional.empty();
         }
     }
 
-    // Delete
     public boolean deleteSupplier(long id) {
         if (supplierRepository.existsById(id)) {
             supplierRepository.deleteById(id);
@@ -61,10 +54,9 @@ public class SupplierService {
         Optional<Supplier> optionalSupplier = supplierRepository.findById(supplierId);
         if (optionalSupplier.isPresent()) {
             Supplier supplier = optionalSupplier.get();
-            // Get the items associated with the supplier
             return supplier.getItems();
         } else {
-            return null; // Supplier not found
+            return null;
         }
     }
 }

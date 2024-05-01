@@ -12,12 +12,13 @@ import java.util.List;
 @Entity
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id ;
     private String name;
     private int quantity;
     private double price;
     @ManyToOne
+    @JoinColumn(name = "supplier_id")
     private Supplier supplier;
     @OneToMany
     private List<Transaction> transactions;

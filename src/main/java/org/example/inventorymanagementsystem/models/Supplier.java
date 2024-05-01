@@ -21,7 +21,7 @@ public class Supplier {
     private String email;
     private String phone;
     private String description;
-    @OneToMany
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     private List<Item> items;
 
 

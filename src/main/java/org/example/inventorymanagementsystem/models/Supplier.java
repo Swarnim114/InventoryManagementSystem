@@ -22,7 +22,7 @@ public class Supplier {
     private String phone;
     private String description;
     @OneToMany
-    private List<Item> itemsSupplied;
+    private List<Item> items;
 
 
     public Supplier() {

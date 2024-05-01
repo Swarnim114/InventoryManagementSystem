@@ -5,6 +5,8 @@ import lombok.Getter;
 
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -17,13 +19,16 @@ public class Item {
     private double price;
     @ManyToOne
     private Supplier supplier;
+    @OneToMany
+    private List<Transaction> transactions;
 
-    public Item(Long id, String name, int quantity, double price, Supplier supplier) {
+    public Item(Long id, String name, int quantity, double price, Supplier supplier,Transaction transaction) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.supplier = supplier;
+        this.transactions.add(transaction);
 
     }
     public Item() {

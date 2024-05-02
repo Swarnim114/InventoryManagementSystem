@@ -1,5 +1,7 @@
 package org.example.inventorymanagementsystem.services;
 
+import org.example.inventorymanagementsystem.exceptions.InvalidSupplierItemsException;
+import org.example.inventorymanagementsystem.exceptions.InvalidSupplierUpdateException;
 import org.example.inventorymanagementsystem.models.Item;
 import org.example.inventorymanagementsystem.models.Supplier;
 import org.example.inventorymanagementsystem.repository.SupplierRepository;
@@ -28,7 +30,7 @@ public class SupplierService {
         return supplierRepository.findAll();
     }
 
-    public Optional<Supplier> updateSupplier(long id, Supplier newSupplier) {
+    public Optional<Supplier> updateSupplier(long id, Supplier newSupplier) throws InvalidSupplierUpdateException{
         Optional<Supplier> optionalSupplier = supplierRepository.findById(id);
         if (optionalSupplier.isPresent()) {
             Supplier existingSupplier = optionalSupplier.get();
@@ -38,7 +40,7 @@ public class SupplierService {
             existingSupplier.setDescription(newSupplier.getDescription());
             return Optional.of(supplierRepository.save(existingSupplier));
         } else {
-            return Optional.empty();
+            throw new InvalidSupplierUpdateException("Supplier with id " + id + " not found");
         }
     }
 
@@ -50,13 +52,13 @@ public class SupplierService {
         return false;
     }
 
-    public List<Item> getItemsBySupplierId(long supplierId) {
+    public List<Item> getItemsBySupplierId(long supplierId) throws InvalidSupplierItemsException {
         Optional<Supplier> optionalSupplier = supplierRepository.findById(supplierId);
         if (optionalSupplier.isPresent()) {
             Supplier supplier = optionalSupplier.get();
             return supplier.getItems();
         } else {
-            return null;
+            throw new InvalidSupplierItemsException("Supplier with id " + supplierId + " not found");
         }
     }
 }

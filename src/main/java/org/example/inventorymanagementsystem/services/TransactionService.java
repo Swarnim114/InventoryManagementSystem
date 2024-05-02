@@ -1,5 +1,6 @@
 package org.example.inventorymanagementsystem.services;
 
+import org.example.inventorymanagementsystem.exceptions.InvalidTransactionIdException;
 import org.example.inventorymanagementsystem.models.Item;
 import org.example.inventorymanagementsystem.models.Transaction;
 import org.example.inventorymanagementsystem.repository.TransactionRepository;
@@ -28,8 +29,13 @@ public class TransactionService {
     }
 
     // Read
-    public Optional<Transaction> getTransactionById(long id) {
-        return transactionRepository.findById(id);
+    public Optional<Transaction> getTransactionById(long id) throws InvalidTransactionIdException {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
+        if(optionalTransaction.isPresent()) {
+            return Optional.of(optionalTransaction.get());
+        }else{
+            throw new InvalidTransactionIdException("Transaction with id " + id + " not found");
+        }
     }
 
     public List<Transaction> getAllTransactions() {
@@ -39,4 +45,6 @@ public class TransactionService {
     public List<Transaction> getAllTransactionsForItem(Item item) {
         return item.getTransactions();
     }
+
+
 }

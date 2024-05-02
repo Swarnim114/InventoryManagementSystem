@@ -1,5 +1,7 @@
 package org.example.inventorymanagementsystem.services;
 
+import org.example.inventorymanagementsystem.exceptions.InvalidItemUpdateException;
+import org.example.inventorymanagementsystem.exceptions.ItemNotFoundException;
 import org.example.inventorymanagementsystem.models.Item;
 import org.example.inventorymanagementsystem.repository.ItemRepository;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +23,20 @@ public class ItemService {
         return ResponseEntity.ok(savedItem);
     }
 
-    public Optional<Item> getItemById(long id) {
-        return itemRepository.findById(id);
+    public Optional<Item> getItemById(long id) throws ItemNotFoundException{
+        Optional<Item> optionalItem = itemRepository.findById(id);
+        if(optionalItem.isPresent()) {
+            return Optional.of(optionalItem.get());
+        }else{
+            throw new ItemNotFoundException("Item with id " + id + " not found");
+        }
     }
 
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
 
-    public Optional<Item> updateItem(long id, Item newItem) {
+    public Optional<Item> updateItem(long id, Item newItem) throws InvalidItemUpdateException {
         Optional<Item> optionalItem = itemRepository.findById(id);
         if (optionalItem.isPresent()) {
             Item existingItem = optionalItem.get();
@@ -38,7 +45,7 @@ public class ItemService {
             existingItem.setPrice(newItem.getPrice());
             return Optional.of(itemRepository.save(existingItem));
         } else {
-            return Optional.empty();
+            throw new InvalidItemUpdateException("Item with id " + id + " not found");
         }
     }
 

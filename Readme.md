@@ -49,7 +49,7 @@
 
 ### Team Members 
  - Swarnim - Database integration,Item service and controller
- - Sushant Singh - Exceptions
+ - Sushant Singh - Exceptions ,Helped in Services
  - Divyanshu Pandey - Models , Help in planning
  - Kumar kartikay -Supplier Service , Transaction controller
  - Prince - transaction service , Checking working via postman

@@ -33,8 +33,10 @@
  -  **Fintionalites** - record transactions 
 	    - Crud operations
 
+  ### Class Diagram  
 
-![[InventoryManagementSystem.png]]
+
+![InventoryManagementSystem](https://github.com/Swarnim114/InventoryManagementSystem/assets/134050970/e0f40910-98f5-4fcc-ba2d-c621ecad1012)
 
 ### Database used 
 - **MariaDB**
